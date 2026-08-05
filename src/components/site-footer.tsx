@@ -57,7 +57,7 @@ export function SiteFooter({ buildTime }: Props) {
             {t('lastBuilt')}
             {' '}
             <a
-              href="https://github.com/sabertazimi/blog/actions"
+              href="https://github.com/sabertaz/blog/actions"
               className="hover:text-primary decoration-muted-foreground/30 underline underline-offset-4 transition-colors hover:decoration-current"
               target="_blank"
               rel="noopener noreferrer"
