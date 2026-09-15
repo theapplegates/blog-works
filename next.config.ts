@@ -8,7 +8,7 @@ const nextConfig: NextConfig = {
     return [
       {
         source: '/',
-        destination: '/en-US',
+        destination: '/en-US/posts',
         permanent: true, // or false if you plan on changing default locales dynamically
       },
     ]
