@@ -20,7 +20,11 @@ export function PostLayout({ post: { source, thumbnail, title, slug, prevPost, n
       <div className="border-border container mx-auto flex px-6 lg:border-r lg:px-0">
         <article className="border-border min-w-0 flex-1 border-x">
           <div className="relative h-64 w-full overflow-hidden md:h-96 lg:h-128">
-            <PostImage src={thumbnail} alt={title} />
+            <PostImage
+              src={thumbnail}
+              alt={title}
+              sizes="(min-width: 1280px) 894px, (min-width: 1024px) 638px, (min-width: 768px) 718px, (min-width: 640px) 590px, calc(100vw - 50px)"
+            />
           </div>
           <PostSection>
             <PostContent source={source} />

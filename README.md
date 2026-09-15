@@ -10,6 +10,8 @@
 
 An awesome [blog](https://blog.tazimi.dev) system based on Next.js.
 
+For this site's JXL → AVIF → WebP image workflow, see [Responsive images](CLOUDINARY.md).
+
 |                  Default                  |                             Custom                             |
 | :---------------------------------------: | :------------------------------------------------------------: |
 | ![Home](./.github/images/home.gif 'Home') | ![Home Custom](./.github/images/home-custom.gif 'Home Custom') |

@@ -1,13 +1,13 @@
-"use client"
+'use client'
 
-import Image from "next/image"
-import { useState } from "react"
-import { CloudinaryPicture } from "./cloudinary-picture"
-import breakpointsData from "../data/cloudinary-breakpoints.json"
+import Image from 'next/image'
+import { useState } from 'react'
+import breakpointsData from '../data/cloudinary-breakpoints.json'
+import { CloudinaryPicture } from './cloudinary-picture'
 
 type LegacyBreakpointEntry = number[]
 
-type BreakpointEntry = {
+interface BreakpointEntry {
   width: number
   height: number
   breakpoints: number[]
@@ -16,7 +16,7 @@ type BreakpointEntry = {
 type BreakpointManifest = Record<string, LegacyBreakpointEntry | BreakpointEntry>
 
 function classes(...values: Array<string | false | null | undefined>) {
-  return values.filter(Boolean).join(" ")
+  return values.filter(Boolean).join(' ')
 }
 
 function localPathToPublicId(src: string): string | null {
@@ -29,11 +29,11 @@ function localPathToPublicId(src: string): string | null {
   }
 
   const clean = src
-    .replace(/^\/+/, "")
-    .replace(/^public\//, "")
-    .replace(/^src\/assets\/images\//, "assets/images/")
-    .replace(/\.[^/.]+$/, "")
-    .replace(/\/+/g, "/")
+    .replace(/^\/+/, '')
+    .replace(/^public\//, '')
+    .replace(/^src\/assets\/images\//, 'assets/images/')
+    .replace(/\.[^/.]+$/, '')
+    .replace(/\/+/g, '/')
 
   return clean || null
 }
@@ -45,7 +45,7 @@ export interface PostImageProps {
   height?: number
   placeholder?: string
   sizes?: string
-  loading?: "lazy" | "eager"
+  loading?: 'lazy' | 'eager'
   priority?: boolean
   unoptimized?: boolean
   hoverScale?: boolean
@@ -59,8 +59,8 @@ export function PostImage({
   width,
   height,
   placeholder,
-  sizes = "(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw",
-  loading = "lazy",
+  sizes = '(min-width: 1280px) 426px, (min-width: 1024px) 341px, (min-width: 768px) 359px, (min-width: 640px) 590px, calc(100vw - 50px)',
+  loading = 'lazy',
   priority = false,
   unoptimized = false,
   hoverScale = false,
@@ -77,22 +77,22 @@ export function PostImage({
     setError(false)
   }
 
-  if (src === undefined || src === "") {
+  if (src === undefined || src === '') {
     return (
-      <div className={classes("relative flex h-full w-full items-center justify-center", className)}>
-        {placeholder ? <span>{placeholder}</span> : null}
+      <div className={classes('relative flex h-full w-full items-center justify-center', className)}>
+        {placeholder !== undefined && placeholder !== '' ? <span>{placeholder}</span> : null}
       </div>
     )
   }
 
-  const publicId =
-    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME !== undefined &&
-    process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME !== ""
+  const publicId
+    = process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME !== undefined
+      && process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME !== ''
       ? localPathToPublicId(src)
       : null
 
-  const entry =
-    publicId === null ? undefined : (breakpointsData as BreakpointManifest)[publicId]
+  const entry
+    = publicId === null ? undefined : (breakpointsData as BreakpointManifest)[publicId]
 
   if (publicId !== null && entry !== undefined) {
     const legacyEntry = Array.isArray(entry)
@@ -109,10 +109,11 @@ export function PostImage({
         sizes={sizes}
         breakpoints={breakpoints}
         priority={priority}
+        loading={loading}
         fill
         className={classes(
-          "transition-transform duration-300",
-          hoverScale && "group-hover:scale-105",
+          'transition-transform duration-300',
+          hoverScale && 'group-hover:scale-105',
           className,
         )}
         pictureClassName={pictureClassName}
@@ -122,38 +123,44 @@ export function PostImage({
 
   return (
     <>
-      {!loaded ? (
-        <>
-          <div
-            className={classes(
-              "absolute inset-0 animate-pulse",
-              hoverScale && "group-hover:scale-105",
-            )}
-          />
-          {placeholder ? (
-            <span className="absolute inset-0 flex items-center justify-center">{placeholder}</span>
-          ) : null}
-        </>
-      ) : null}
+      {!loaded
+        ? (
+            <>
+              <div
+                className={classes(
+                  'absolute inset-0 animate-pulse',
+                  hoverScale && 'group-hover:scale-105',
+                )}
+              />
+              {placeholder !== undefined && placeholder !== ''
+                ? (
+                    <span className="absolute inset-0 flex items-center justify-center">{placeholder}</span>
+                  )
+                : null}
+            </>
+          )
+        : null}
 
-      {!error ? (
-        <Image
-          src={src}
-          alt={alt}
-          fill
-          sizes={sizes}
-          loading={priority ? "eager" : loading}
-          priority={priority}
-          unoptimized={unoptimized}
-          className={classes(
-            "object-cover transition-transform duration-300",
-            hoverScale && "group-hover:scale-105",
-            className,
-          )}
-          onLoad={() => setLoaded(true)}
-          onError={() => setError(true)}
-        />
-      ) : null}
+      {!error
+        ? (
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              sizes={sizes}
+              loading={priority ? 'eager' : loading}
+              priority={priority}
+              unoptimized={unoptimized}
+              className={classes(
+                'object-cover transition-transform duration-300',
+                hoverScale && 'group-hover:scale-105',
+                className,
+              )}
+              onLoad={() => setLoaded(true)}
+              onError={() => setError(true)}
+            />
+          )
+        : null}
     </>
   )
 }

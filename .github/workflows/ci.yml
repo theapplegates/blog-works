@@ -10,6 +10,10 @@ on:
     branches:
       - main
 
+# Public delivery setting: CI should build the same image markup as production.
+env:
+  NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME: paulapplegate-com
+
 jobs:
   lint:
     name: Lint
