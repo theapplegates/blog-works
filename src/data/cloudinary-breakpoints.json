@@ -1,0 +1,17 @@
+{
+  "assets/images/Gulfstream-G800": {
+    "width": 1672,
+    "height": 941,
+    "breakpoints": [
+      200,
+      551,
+      790,
+      981,
+      1157,
+      1168,
+      1449,
+      1524,
+      1672
+    ]
+  }
+}
