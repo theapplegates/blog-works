@@ -1,18 +1,18 @@
-"use client"
+'use client'
 
-import { getCldImageUrl } from "next-cloudinary"
+import { getCldImageUrl } from 'next-cloudinary'
 
-type CloudinaryFormat = "jxl" | "avif" | "webp"
+type CloudinaryFormat = 'jxl' | 'avif' | 'webp'
 
-const FORMAT_ORDER: CloudinaryFormat[] = ["jxl", "avif", "webp"]
+const FORMAT_ORDER: CloudinaryFormat[] = ['jxl', 'avif', 'webp']
 const MIME_TYPES: Record<CloudinaryFormat, string> = {
-  jxl: "image/jxl",
-  avif: "image/avif",
-  webp: "image/webp",
+  jxl: 'image/jxl',
+  avif: 'image/avif',
+  webp: 'image/webp',
 }
 
 function classes(...values: Array<string | false | null | undefined>) {
-  return values.filter(Boolean).join(" ")
+  return values.filter(Boolean).join(' ')
 }
 
 export interface CloudinaryPictureProps {
@@ -23,6 +23,7 @@ export interface CloudinaryPictureProps {
   sizes?: string
   breakpoints: number[]
   priority?: boolean
+  loading?: 'lazy' | 'eager'
   fill?: boolean
   className?: string
   pictureClassName?: string
@@ -32,14 +33,14 @@ function buildUrl(publicId: string, format: CloudinaryFormat, width: number): st
   return getCldImageUrl({
     src: publicId,
     width,
-    crop: "limit",
+    crop: 'limit',
     format,
-    quality: "auto",
+    quality: 'auto',
   })
 }
 
 function buildSrcSet(publicId: string, format: CloudinaryFormat, widths: number[]): string {
-  return widths.map((candidateWidth) => `${buildUrl(publicId, format, candidateWidth)} ${candidateWidth}w`).join(", ")
+  return widths.map(candidateWidth => `${buildUrl(publicId, format, candidateWidth)} ${candidateWidth}w`).join(', ')
 }
 
 export function CloudinaryPicture({
@@ -47,15 +48,16 @@ export function CloudinaryPicture({
   alt,
   width,
   height,
-  sizes = "100vw",
+  sizes = '100vw',
   breakpoints,
   priority = false,
+  loading = 'lazy',
   fill = false,
   className,
   pictureClassName,
 }: CloudinaryPictureProps) {
   const widths = [...new Set(breakpoints)]
-    .filter((candidateWidth) => Number.isFinite(candidateWidth) && candidateWidth > 0)
+    .filter(candidateWidth => Number.isFinite(candidateWidth) && candidateWidth > 0)
     .sort((a, b) => a - b)
 
   if (widths.length === 0) {
@@ -67,17 +69,17 @@ export function CloudinaryPicture({
   // browser download a very large image even though Cloudinary capped the
   // responsive breakpoint set at a smaller size.
   const fallbackWidth = widths[widths.length - 1]
-  const fallbackSrc = buildUrl(publicId, "webp", fallbackWidth)
+  const fallbackSrc = buildUrl(publicId, 'webp', fallbackWidth)
 
   return (
     <picture
       className={classes(
-        "block",
-        fill && "relative h-full w-full overflow-hidden",
+        'block',
+        fill && 'relative h-full w-full overflow-hidden',
         pictureClassName,
       )}
     >
-      {FORMAT_ORDER.map((format) => (
+      {FORMAT_ORDER.map(format => (
         <source
           key={format}
           type={MIME_TYPES[format]}
@@ -87,15 +89,16 @@ export function CloudinaryPicture({
       ))}
       <img
         src={fallbackSrc}
+        srcSet={buildSrcSet(publicId, 'webp', widths)}
         alt={alt}
         width={width}
         height={height}
         sizes={sizes}
-        loading={priority ? "eager" : "lazy"}
+        loading={priority ? 'eager' : loading}
         decoding="async"
-        fetchPriority={priority ? "high" : "auto"}
+        fetchPriority={priority ? 'high' : 'auto'}
         className={classes(
-          fill ? "absolute inset-0 h-full w-full object-cover" : "h-auto w-full",
+          fill ? 'absolute inset-0 h-full w-full object-cover' : 'h-auto w-full',
           className,
         )}
       />

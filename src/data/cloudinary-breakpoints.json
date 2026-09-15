@@ -13,5 +13,52 @@
       1524,
       1672
     ]
+  },
+  "thumbnails/laptop-ai-workspace": {
+    "width": 6934,
+    "height": 4623,
+    "breakpoints": [
+      200,
+      601,
+      889,
+      1094,
+      1270,
+      1441,
+      1581,
+      1700,
+      1813,
+      2000
+    ]
+  },
+  "thumbnails/laptop-computer-on-table": {
+    "width": 6000,
+    "height": 3376,
+    "breakpoints": [
+      200,
+      609,
+      613,
+      1225,
+      1335,
+      1593,
+      1747,
+      1900,
+      1941,
+      2000
+    ]
+  },
+  "thumbnails/pen-writing-on-notebook": {
+    "width": 6000,
+    "height": 4000,
+    "breakpoints": [
+      200,
+      663,
+      1231,
+      1251,
+      1508,
+      1739,
+      1885,
+      1983,
+      2000
+    ]
   }
 }

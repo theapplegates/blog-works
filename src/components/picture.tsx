@@ -1,10 +1,9 @@
-import { CloudinaryPicture } from "./cloudinary-picture"
-import breakpointsData from "../data/cloudinary-breakpoints.json"
-
+import breakpointsData from '../data/cloudinary-breakpoints.json'
+import { CloudinaryPicture } from './cloudinary-picture'
 
 type LegacyBreakpointEntry = number[]
 
-type BreakpointEntry = {
+interface BreakpointEntry {
   width: number
   height: number
   breakpoints: number[]
@@ -25,11 +24,11 @@ export interface PictureProps {
 
 function toPublicId(src: string): string {
   return src
-    .replace(/^\/+/, "")
-    .replace(/^public\//, "")
-    .replace(/^src\/assets\/images\//, "assets/images/")
-    .replace(/\.[^/.]+$/, "")
-    .replace(/\/+/g, "/")
+    .replace(/^\/+/, '')
+    .replace(/^public\//, '')
+    .replace(/^src\/assets\/images\//, 'assets/images/')
+    .replace(/\.[^/.]+$/, '')
+    .replace(/\/+/g, '/')
 }
 
 export function Picture({
@@ -37,7 +36,7 @@ export function Picture({
   alt,
   width,
   height,
-  sizes = "(min-width: 1200px) 40vw, (min-width: 992px) 60vw, (min-width: 768px) 70vw, 100vw",
+  sizes = '(min-width: 1200px) 40vw, (min-width: 992px) 60vw, (min-width: 768px) 70vw, 100vw',
   priority = false,
   className,
   pictureClassName,
