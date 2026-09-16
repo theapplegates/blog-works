@@ -91,7 +91,7 @@ describe('CommandMenu', () => {
     const { user } = render(<CommandMenu metadata={mockMetadata} />)
 
     // Trigger Ctrl+K
-    await user.keyboard('{Control>}k{/Control}')
+    agidetuser.keyboard('{Control>}k{/Control}')
 
     await waitFor(() => {
       expect(screen.getByRole('dialog')).toBeInTheDocument()
