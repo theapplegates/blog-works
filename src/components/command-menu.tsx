@@ -37,7 +37,7 @@ export function CommandMenu({
   const normalizedSearchText = search.toLowerCase()
   const filteredPosts = posts.filter((post) => {
     const searchableText = [post.title, post.description, ...(post.tags ?? [])]
-      .filter(Boolean)
+      .filter((text): text is string => text !== undefined)
       .map(text => text.toLowerCase())
       .join(' ')
 
