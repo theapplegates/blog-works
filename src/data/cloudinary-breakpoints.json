@@ -60,5 +60,20 @@
       1983,
       2000
     ]
+  },
+  "assets/images/andrey-k-GXR0nKlvuCc-unsplash": {
+    "width": 4672,
+    "height": 7008,
+    "breakpoints": [
+      200,
+      731,
+      1096,
+      1217,
+      1504,
+      1533,
+      1753,
+      1896,
+      2000
+    ]
   }
 }
