@@ -209,6 +209,26 @@ describe('CommandMenu', () => {
     })
   })
 
+  it('should filter posts by description when searching', async () => {
+    const { user } = render(<CommandMenu metadata={mockMetadata} />)
+
+    // Open dialog
+    const buttons = screen.getAllByRole('button', { name: /search/i })
+    await user.click(buttons[0])
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument()
+    })
+
+    // Type a term only present in the post description
+    const searchInput = screen.getByPlaceholderText(/search/i)
+    await user.type(searchInput, 'First test post')
+
+    await waitFor(() => {
+      expect(screen.getByText('Test Post 1')).toBeInTheDocument()
+    })
+  })
+
   it('should filter and display tags when searching', async () => {
     const { user } = render(<CommandMenu metadata={mockMetadata} />)
 
