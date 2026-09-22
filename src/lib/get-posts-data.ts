@@ -90,6 +90,9 @@ async function generatePostData(filePath: string): Promise<Post> {
     createTime,
     updateTime,
     readingTime,
+    // Whitespace-normalized body so multi-word phrases spanning line
+    // breaks are matchable by client-side full-text search
+    content: content.replace(/\s+/g, ' ').trim(),
     prevPost: null,
     nextPost: null,
     excerpt,

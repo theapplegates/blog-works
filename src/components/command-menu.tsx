@@ -35,14 +35,26 @@ export function CommandMenu({
   const [search, setSearch] = useState('')
 
   const normalizedSearchText = search.toLowerCase()
-  const filteredPosts = posts.filter((post) => {
-    const searchableText = [post.title, post.description, ...(post.tags ?? [])]
-      .filter((text): text is string => text !== undefined)
-      .map(text => text.toLowerCase())
-      .join(' ')
+  const filteredPosts = posts
+    .map((post) => {
+      let score = 0
 
-    return searchableText.includes(normalizedSearchText)
-  })
+      if (post.title.toLowerCase().includes(normalizedSearchText)) {
+        score = 3
+      } else if (
+        post.description?.toLowerCase().includes(normalizedSearchText)
+        || post.tags?.some(tag => tag.toLowerCase().includes(normalizedSearchText))
+      ) {
+        score = 2
+      } else if (post.content?.toLowerCase().includes(normalizedSearchText)) {
+        score = 1
+      }
+
+      return { post, score }
+    })
+    .filter(({ score }) => score > 0)
+    .sort((a, b) => b.score - a.score)
+    .map(({ post }) => post)
   const filteredTags = allTags.filter(tag => tag.toLowerCase().includes(normalizedSearchText) && tag !== 'All')
 
   const runCommand = useCallback((command: () => void) => {

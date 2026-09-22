@@ -229,6 +229,50 @@ describe('CommandMenu', () => {
     })
   })
 
+  it('should filter posts by content when searching', async () => {
+    const { user } = render(<CommandMenu metadata={mockMetadata} />)
+
+    // Open dialog
+    const buttons = screen.getAllByRole('button', { name: /search/i })
+    await user.click(buttons[0])
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument()
+    })
+
+    // Type a term only present in the post body content
+    const searchInput = screen.getByPlaceholderText(/search/i)
+    await user.type(searchInput, 'zettelkasten')
+
+    await waitFor(() => {
+      expect(screen.getByText('Test Post 1')).toBeInTheDocument()
+      expect(screen.getByText('Test Post 2')).toBeInTheDocument()
+    })
+  })
+
+  it('should rank title matches above content matches', async () => {
+    const { user } = render(<CommandMenu metadata={mockMetadata} />)
+
+    // Open dialog
+    const buttons = screen.getAllByRole('button', { name: /search/i })
+    await user.click(buttons[0])
+
+    await waitFor(() => {
+      expect(screen.getByRole('dialog')).toBeInTheDocument()
+    })
+
+    // 'test post 1' matches Test Post 1 in its title, but Test Post 2
+    // only in its body content — the title match must rank first
+    const searchInput = screen.getByPlaceholderText(/search/i)
+    await user.type(searchInput, 'test post 1')
+
+    await waitFor(() => {
+      const options = screen.getAllByRole('option')
+      expect(options[0]).toHaveTextContent('Test Post 1')
+      expect(options[1]).toHaveTextContent('Test Post 2')
+    })
+  })
+
   it('should filter and display tags when searching', async () => {
     const { user } = render(<CommandMenu metadata={mockMetadata} />)
 
