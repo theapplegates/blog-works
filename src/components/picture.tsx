@@ -61,6 +61,22 @@ export function Picture({
     )
   }
 
+  // Without a Cloudinary cloud name (e.g. local builds without .env.local)
+  // these images exist only on Cloudinary, so degrade to a placeholder
+  // instead of crashing the render (mirrors the PostImage fallback).
+  if (process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME === undefined || process.env.NEXT_PUBLIC_CLOUDINARY_CLOUD_NAME === '') {
+    return (
+      <div
+        className={`bg-muted text-muted-foreground flex w-full items-center justify-center text-sm${className !== undefined ? ` ${className}` : ''}`}
+        style={{ aspectRatio: `${resolvedWidth} / ${resolvedHeight}` }}
+        role="img"
+        aria-label={alt}
+      >
+        {alt}
+      </div>
+    )
+  }
+
   return (
     <CloudinaryPicture
       publicId={publicId}
