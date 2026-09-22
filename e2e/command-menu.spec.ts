@@ -19,6 +19,17 @@ test.describe('Command Menu', () => {
     await expect(dialog).not.toBeVisible()
   })
 
+  test('finds posts by body content', async ({ page }) => {
+    await page.keyboard.press(getKeyboardShortcut())
+    const dialog = page.getByRole('dialog')
+    const searchInput = dialog.getByRole('combobox')
+
+    // 'remark' only appears in post bodies, not in titles, descriptions or tags
+    await searchInput.fill('remark')
+
+    await expect(dialog.getByRole('option').first()).toBeVisible()
+  })
+
   test('navigates to selected post from search results', async ({ page }) => {
     await page.keyboard.press(getKeyboardShortcut())
     const dialog = page.getByRole('dialog')

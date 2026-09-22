@@ -76,6 +76,7 @@ export const mockPostsMeta: PostsMeta = [
     createTime: '2025-01-01',
     readingTime: 5,
     tags: ['React', 'TypeScript'],
+    content: 'This post explains zettelkasten note-taking in depth',
     prevPost: {
       slug: 'previous-post',
       title: 'Previous Post',
@@ -94,6 +95,7 @@ export const mockPostsMeta: PostsMeta = [
     createTime: '2025-01-02',
     readingTime: 3,
     tags: ['Testing'],
+    content: 'A zettelkasten workflow walkthrough expanding on Test Post 1 ideas',
     prevPost: {
       slug: 'previous-post',
       title: 'Previous Post',

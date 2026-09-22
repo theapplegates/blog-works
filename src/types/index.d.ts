@@ -15,6 +15,8 @@ export interface PostMeta {
   updateTime?: string
   readingTime: number
   tags?: Tag[]
+  /** Plain-text post body used for client-side full-text search */
+  content?: string
   prevPost: {
     slug: string
     title: string
